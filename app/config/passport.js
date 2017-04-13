@@ -1,6 +1,6 @@
 'use strict';
 
-var GitHubStrategy = require('passport-github').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../models/users');
 var configAuth = require('./auth');
 
@@ -15,34 +15,35 @@ module.exports = function (passport) {
 		});
 	});
 
-	passport.use(new GitHubStrategy({
-		clientID: configAuth.githubAuth.clientID,
-		clientSecret: configAuth.githubAuth.clientSecret,
-		callbackURL: configAuth.githubAuth.callbackURL
+	passport.use(new FacebookStrategy({
+		clientID: configAuth.fbAuth.clientID,
+		clientSecret: configAuth.fbAuth.clientSecret,
+		callbackURL: configAuth.fbAuth.callbackURL,
+		profileFields: ['id', 'displayName', 'email']
 	},
 	function (token, refreshToken, profile, done) {
 		process.nextTick(function () {
-			User.findOne({ 'github.id': profile.id }, function (err, user) {
-				if (err) {
-					return done(err);
-				}
-
+			User.findOne({ 'fb.id': profile.id }, function (err, user) {
+				
+				console.log('profile: ' + JSON.stringify(profile));
+				
+				if (err) return done(err);
 				if (user) {
 					return done(null, user);
-				} else {
+				} 
+				else {
 					var newUser = new User();
-
-					newUser.github.id = profile.id;
-					newUser.github.username = profile.username;
-					newUser.github.displayName = profile.displayName;
-					newUser.github.publicRepos = profile._json.public_repos;
+					
+					newUser.fb.id = profile.id;
+					newUser.fb.access_token = token;
+					newUser.fb.name = profile.displayName;
+					newUser.fb.email = profile.emails[0].value;
 					newUser.nbrClicks.clicks = 0;
-
+					
+					console.log('newUser: ' + newUser);
+					
 					newUser.save(function (err) {
-						if (err) {
-							throw err;
-						}
-
+						if (err) throw err;
 						return done(null, newUser);
 					});
 				}

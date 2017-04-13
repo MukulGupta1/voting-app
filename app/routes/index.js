@@ -38,20 +38,20 @@ module.exports = function (app, passport) {
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
+			res.json(req.user.fb);
 		});
-
-	app.route('/auth/github')
-		.get(passport.authenticate('github'));
-
-	app.route('/auth/github/callback')
-		.get(passport.authenticate('github', {
-			successRedirect: '/',
-			failureRedirect: '/login'
-		}));
-
+		
 	app.route('/api/:id/clicks')
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
+
+	app.route('/auth/facebook')
+		.get(passport.authenticate('facebook', { scope : 'email' }));
+
+	app.route('/auth/facebook/callback')
+		.get(passport.authenticate('facebook', {
+			successRedirect: '/',
+			failureRedirect: '/login'}));
+
 };
