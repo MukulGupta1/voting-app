@@ -10,9 +10,12 @@ var User = new Schema({
   	name: String,
     email: String
   },
-   nbrClicks: {
-      clicks: Number
-   }
-});
+  nbrPolls: {
+    polls: Number
+  },
+  nbrClicks: {
+    clicks: Number
+  }
+}, { versionKey: false });
 
 module.exports = mongoose.model('User', User);

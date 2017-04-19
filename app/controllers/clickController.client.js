@@ -2,9 +2,11 @@
 
 (function () {
 
-   var addButton = document.querySelector('.btn-add');
-   var deleteButton = document.querySelector('.btn-delete');
+   var addClickButton = document.querySelector('#add-click');
+   var deleteClickButton = document.querySelector('#reset-click');
+   
    var clickNbr = document.querySelector('#click-nbr');
+   
    var apiUrl = appUrl + '/api/:id/clicks';
 
    function updateClickCount (data) {
@@ -14,7 +16,7 @@
 
    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount));
 
-   addButton.addEventListener('click', function () {
+   addClickButton.addEventListener('click', function () {
       ajaxFunctions.ajaxRequest('POST', apiUrl, function () {
          ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount);
          console.log('apiUrl: ' + apiUrl)
@@ -22,7 +24,7 @@
 
    }, false);
 
-   deleteButton.addEventListener('click', function () {
+   deleteClickButton.addEventListener('click', function () {
       ajaxFunctions.ajaxRequest('DELETE', apiUrl, function () {
          ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount);
       });

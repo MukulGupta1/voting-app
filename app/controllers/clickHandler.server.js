@@ -3,7 +3,7 @@
 var Users = require('../models/users.js');
 
 function ClickHandler () {
-
+	
 	this.getClicks = function (req, res) {
 		Users
 			.findOne({ 'fb.id': req.user.fb.id }, { '_id': false })

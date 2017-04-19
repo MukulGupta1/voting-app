@@ -2,9 +2,10 @@
 
 (function () {
 
-   var profileName = document.querySelector('#profile-name');
    var profileId = document.querySelector('#profile-id') || null;
+   var profileName = document.querySelector('#profile-name');
    var profileEmail = document.querySelector('#profile-email') || null;
+   
    var apiUrl = appUrl + '/api/:id';
    
    function updateHtmlElement (data, element, userProperty) {
@@ -13,8 +14,9 @@
 
    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
       
-      var userObject = JSON.parse(data);
+      var userObject = JSON.parse(data).fb;
       console.log('data: ' + data);
+      console.log('userObject: ' + JSON.stringify(userObject));
 
       if (profileId !== null) {
          updateHtmlElement(userObject, profileId, 'id');   
@@ -27,5 +29,6 @@
       if (profileEmail !== null) {
          updateHtmlElement(userObject, profileEmail, 'email');   
       }
+      
    }));
 })();

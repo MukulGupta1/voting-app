@@ -2,6 +2,8 @@
 
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var PollCountHandler = require(path + '/app/controllers/pollCountHandler.server.js');
+var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
 
 module.exports = function (app, passport) {
 
@@ -14,6 +16,8 @@ module.exports = function (app, passport) {
 	}
 
 	var clickHandler = new ClickHandler();
+	var pollCountHandler = new PollCountHandler();
+	var pollHandler = new PollHandler();
 
 	app.route('/')
 		.get(isLoggedIn, function (req, res) {
@@ -38,20 +42,37 @@ module.exports = function (app, passport) {
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.fb);
+			res.json(req.user);
 		});
 		
 	app.route('/api/:id/clicks')
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
+		
+	app.route('/api/:id/pollCount')
+		.get(isLoggedIn, pollCountHandler.getPollCount);
+		
+	app.route('/api/:id/polls')
+		.get(isLoggedIn, function (req, res) {
+			res.sendFile(path + '/public/poll.html')
+		})
+		.post(isLoggedIn, pollHandler.addPoll)
+		// .delete(isLoggedIn, pollHandler.deletePoll);
 
 	app.route('/auth/facebook')
-		.get(passport.authenticate('facebook', { scope : 'email' }));
+		.get(passport.authenticate('facebook', { scope : 'email' 
+		}));
 
 	app.route('/auth/facebook/callback')
 		.get(passport.authenticate('facebook', {
 			successRedirect: '/',
-			failureRedirect: '/login'}));
-
+			failureRedirect: '/login'
+		}));
+			
+	app.route('/addPoll')
+		.get(isLoggedIn, function (req, res) {
+			res.sendFile(path + '/public/addPoll.html');
+		});
+	
 };

@@ -25,8 +25,6 @@ module.exports = function (passport) {
 		process.nextTick(function () {
 			User.findOne({ 'fb.id': profile.id }, function (err, user) {
 				
-				console.log('profile: ' + JSON.stringify(profile));
-				
 				if (err) return done(err);
 				if (user) {
 					return done(null, user);
@@ -38,9 +36,8 @@ module.exports = function (passport) {
 					newUser.fb.access_token = token;
 					newUser.fb.name = profile.displayName;
 					newUser.fb.email = profile.emails[0].value;
+					newUser.nbrPolls.polls = 0;
 					newUser.nbrClicks.clicks = 0;
-					
-					console.log('newUser: ' + newUser);
 					
 					newUser.save(function (err) {
 						if (err) throw err;

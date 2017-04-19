@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<title>Click Game - A waypoint for Mukul Gupta's path to NodeJS Dominance</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+	
+  <body>
+    <div class = "container">
+      <h1 id="title">Add your poll!</h1>
+      <form action="https://voting-app-mukulg.c9users.io/api/:id/polls" method="POST">
+        <div id="pollTitle">
+          <label for="pollTitle">Poll Title</label>
+          <input name="pollTitle" value="pollTitle">
+        </div>
+        <div id="question">
+          <label for="question">Question</label>
+          <input name="question" value="question">
+        </div>
+        <div id="optionOne">
+          <label for="optionOne">Option One</label>
+          <input name="optionOne" value="optionOne">
+        </div>
+        <div id="optionTwo">
+          <label for="optionTwo">Option Two</label>
+          <input name="optionTwo" value="optionTwo">
+        </div>
+        <div id="optionThree">
+          <label for="optionThree">Option Three</label>
+          <input name="optionThree" value="optionThree">
+        </div>
+        <div id ="submitButton">
+          <input type="submit" value="Create Poll">
+        </div>
+      </form>
+    </div>
+    <script type="text/javascript" src="common/ajax-functions.js"></script>
+  	<script type="text/javascript" src="controllers/pollController.client.js"></script>
+  </body>
+</html>
