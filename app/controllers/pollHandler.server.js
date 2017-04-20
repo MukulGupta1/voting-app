@@ -5,7 +5,6 @@ function PollHandler() {
 
 	this.addPoll = function (req, res) {
 		var newPoll = new Polls();
-		
 		newPoll.user_id = req.user.fb.id,
 		newPoll.title = req.body.pollTitle,
 		newPoll.question = req.body.question,
@@ -18,10 +17,21 @@ function PollHandler() {
 		
 		newPoll.save(function (err) {
 			if (err) throw err;
-			res.end()
+			res.redirect('/');
 		});
 
 	}
+	
+	this.getPolls = function (req, res) {
+	Polls
+		.find({'user_id': req.user.fb.id })
+		.exec(function (err, result) {
+				if (err) { throw err; }
+				res.json(result);
+			}
+		);
+	};
+	
 		
 }
 

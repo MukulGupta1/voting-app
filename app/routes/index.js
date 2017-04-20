@@ -54,11 +54,15 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, pollCountHandler.getPollCount);
 		
 	app.route('/api/:id/polls')
+		.get(isLoggedIn, pollHandler.getPolls)
+		.post(isLoggedIn, pollHandler.addPoll)
+		
+		
+	app.route('/viewPolls')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/poll.html')
 		})
-		.post(isLoggedIn, pollHandler.addPoll)
-		// .delete(isLoggedIn, pollHandler.deletePoll);
+		
 
 	app.route('/auth/facebook')
 		.get(passport.authenticate('facebook', { scope : 'email' 
@@ -73,6 +77,11 @@ module.exports = function (app, passport) {
 	app.route('/addPoll')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/addPoll.html');
-		});
+	});
+	
+	app.route('/polls/:id')
+		.get(isLoggedIn, function (req, res) {
+			res.sendFile(path + '/public/addPoll.html');
+	});
 	
 };

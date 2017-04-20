@@ -2,30 +2,27 @@
 
 (function () {
    
-   var title = document.querySelector('#title')
-   var pollTitle = document.querySelector('#pollTitle')
-   var question = document.querySelector('#question');
-   var optionOne = document.querySelector('#optionOne');
-   var optionTwo = document.querySelector('#optionTwo');
-   var optionThree = document.querySelector('#optionThree');
-   var submitButton = document.querySelector('#submitButton')
+   var pollList = document.querySelector('#poll_list');
    
    var apiUrl = appUrl + '/api/:id/polls';
-
-   function addPoll () {
-      console.log('Poll added')
+   
+   function getPollsData (data) {
+      var pollsObject = JSON.parse(data);
+      for (var i = 0; i < pollsObject.length; i++){
+         // var objKey = pollsObject[i]._id.toString().splice(9,24);
+         var objId = pollsObject[i]['_id'];
+         var objVal = pollsObject[i]['title'];
+         var btn = document.createElement('a');
+         btn.setAttribute('id', 'btn-poll-' + i);
+         btn.setAttribute('href', 'polls/' + objId);
+         btn.setAttribute('class', 'btn');
+         btn.setAttribute('style', 'text-decoration:none; margin:20px');
+         btn.innerHTML = '' + objVal;
+         pollList.appendChild(btn);
+         
+      }
    }
-
-   // submitButton.addEventListener('click', function () {
-   //    ajaxFunctions.ajaxRequest('POST', apiUrl, addPoll())
-   //    });
-
-   // }, false);
-
-   // deleteButton.addEventListener('click', function () {
-   //    ajaxFunctions.ajaxRequest('DELETE', apiUrl, function () {
-   //       ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount);
-   //    });
-   // }, false);
-
+   
+   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, getPollsData));
+   
 })();
