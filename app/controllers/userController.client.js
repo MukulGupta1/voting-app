@@ -8,6 +8,8 @@
    
    var apiUrl = appUrl + '/api/:id';
    
+   console.log('apiUrl: ' + apiUrl);
+   
    function updateHtmlElement (data, element, userProperty) {
       element.innerHTML = data[userProperty];
    }
