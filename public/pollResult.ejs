@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include head %>
+	</head>
+  <body>
+		<header>
+			<% include header %>
+		</header>
+    <div class = "container">
+      <h1 id="poll_title"></h1>
+			<div width="200" height="200">
+				<canvas id="myChart"></canvas>
+			</div>
+		</div>
+		<link href="/public/css/pollResult.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="common/ajax-functions.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.min.js"></script>
+  	<script type="text/javascript" src="controllers/pollResultController_chartjs.client.js"></script>
+
+		<!-- Including D3.JS -->
+		<!-- <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script> -->
+  </body>
+</html>

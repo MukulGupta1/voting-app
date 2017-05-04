@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include head %>
+	</head>
+	<body>
+		<header>
+			<% include header %>
+		</header>
+		<div class="container">
+			<div class="voting-icon">
+				<span class="glyphicon glyphicon-check"></span>
+			</div>
+			<p class="clementine-text">Voting App</p>
+			<p>You have created <span id="poll-nbr"></span> polls.</p>
+			<br />
+			<div class="btn-container">
+				<a id="add-poll" href="/addPoll" class="btn" style="text-decoration:none">CREATE</a>
+				<a id="view-polls" href="/viewPolls" class="btn" style="text-decoration:none">VIEW</a>
+			</div>
+		</div>
+		<footer>
+			<% include footer %>
+		</footer>
+		<script type="text/javascript" src="common/ajax-functions.js"></script>
+		<script type="text/javascript" src="controllers/userController.client.js"></script>
+		<script type="text/javascript" src="controllers/pollCountController.client.js"></script>
+	</body>
+
+</html>

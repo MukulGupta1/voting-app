@@ -14,12 +14,16 @@ require('./app/config/passport')(passport);
 mongoose.connect(process.env.MONGO_URI);
 mongoose.Promise = global.Promise;
 
+app.set('views', express.static(process.cwd() + '/public'))
+app.set('view engine', 'ejs')
+
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
 app.use('/polls/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/polls/common', express.static(process.cwd() + '/app/common'));
-
+app.use('/pollResults/controllers', express.static(process.cwd() + '/app/controllers'));
+app.use('/pollResults/common', express.static(process.cwd() + '/app/common'));
 
 app.use(session({
 	secret: 'secretClementine',
