@@ -48,13 +48,14 @@ function PollHandler() {
 
 	this.updatePoll = function(req, res) {
 		var objId = require('mongoose').Types.ObjectId(req.params.id);
+		console.log('objId: ' + objId);
 		var optionVal = req.body.question_one;
 		Polls
 			.findByIdAndUpdate(objId, { $inc : { [optionVal]: 1 }}, (function(err, result){
 				if(err) {
 					throw err;
 				}
-				res.json(result);
+				res.redirect('/pollResults/' + objId);
 			}));
 		}
 

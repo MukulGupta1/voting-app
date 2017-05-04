@@ -21,6 +21,7 @@
 
   function getPollData(data) {
     var pollObject = JSON.parse(data);
+    console.log('pollObject: ' + JSON.stringify(pollObject));
     pollTitle.innerHTML = pollObject['title'];
     question.innerHTML = pollObject['question'];
     optionOneLabel.innerHTML = pollObject['option_one'];
@@ -35,47 +36,14 @@
       [pollObject['option_two'], optionTwoVal],
       [pollObject['option_three'], optionThreeVal]
     ]
-    
+
     console.log('chartDataArr: ' + chartDataArr);
     console.log(typeof chartDataArr);
-    
+
     updateChart(chartDataArr)
 
   }
 
-  function updateChart(chartDataArr) {
-
-    google.charts.load('current', {
-      'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart(chartDataArr) {
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Topping');
-      data.addColumn('number', 'Slices');
-
-      data.addRows(chartDataArr);
-
-      var options = {
-        'title': 'How Much Pizza I Ate Last Night',
-        'width': 400,
-        'height': 300
-      };
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
-
-  }
-
-
   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, getPollData));
-
-
-
-
-
-
-
 
 })();

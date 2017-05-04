@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include head %>
+	</head>
+  <body>
+		<header>
+			<% include header %>
+		</header>
+		<div class="container">
+			<div class="facebook-profile">
+				<img src="/public/img/fb-mark-29px.png" alt="facebook logo" style="margin-bottom:20px"/>
+				<p><span>Name: </span><span id="profile-name" class="profile-value"></span></p>
+				<p><span>Email: </span><span id="profile-email" class="profile-value"></span></p>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="common/ajax-functions.js"></script>
+		<script type="text/javascript" src="controllers/userController.client.js"></script>
+	</body>
+
+</html>

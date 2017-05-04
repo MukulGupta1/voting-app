@@ -1,9 +1,9 @@
 'use strict';
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var PollCountHandler = require(path + '/app/controllers/pollCountHandler.server.js');
 var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
+
 
 module.exports = function(app, passport) {
 
@@ -16,18 +16,18 @@ module.exports = function(app, passport) {
 		}
 	}
 
-	var clickHandler = new ClickHandler();
+	var loggedIn;
 	var pollCountHandler = new PollCountHandler();
 	var pollHandler = new PollHandler();
 
 	app.route('/')
 		.get(isLoggedIn, function(req, res) {
-			res.sendFile(path + '/public/index.html');
+			res.render(path + '/public/index', {loggedIn: true});
 		});
 
 	app.route('/login')
 		.get(function(req, res) {
-			res.sendFile(path + '/public/login.html');
+			res.render(path + '/public/login', {loggedIn: false});
 		});
 
 	app.route('/logout')
@@ -38,18 +38,13 @@ module.exports = function(app, passport) {
 
 	app.route('/profile')
 		.get(isLoggedIn, function(req, res) {
-			res.sendFile(path + '/public/profile.html');
+			res.render(path + '/public/profile', {loggedIn: true});
 		});
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function(req, res) {
 			res.json(req.user);
 		});
-
-	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
 
 	app.route('/api/:id/pollCount')
 		.get(isLoggedIn, pollCountHandler.getPollCount);
@@ -58,12 +53,10 @@ module.exports = function(app, passport) {
 		.get(isLoggedIn, pollHandler.getPolls)
 		.post(isLoggedIn, pollHandler.addPoll)
 
-
 	app.route('/viewPolls')
 		.get(isLoggedIn, function(req, res) {
-			res.sendFile(path + '/public/pollList.html')
+			res.render(path + '/public/pollList', {loggedIn: true})
 		})
-
 
 	app.route('/auth/facebook')
 		.get(passport.authenticate('facebook', {
@@ -78,15 +71,21 @@ module.exports = function(app, passport) {
 
 	app.route('/addPoll')
 		.get(isLoggedIn, function(req, res) {
-			res.sendFile(path + '/public/addPoll.html');
-		});
+			res.render(path + '/public/addPoll', {loggedIn: true});
+		})
+		.post(isLoggedIn, pollHandler.addPoll)
 
 	app.route('/polls/:id')
 		.get(isLoggedIn, function(req, res) {
-			res.sendFile(path + '/public/poll.html');
+			res.render(path + '/public/poll', {loggedIn: true});
 		})
 		.post(isLoggedIn, pollHandler.updatePoll)
-		
+
+	app.route('/pollResults/:id')
+		.get(isLoggedIn, function(req, res) {
+			res.render(path + '/public/pollResult', {loggedIn: true});
+		})
+
 	app.route('/api/polls/:id')
 		.get(isLoggedIn, pollHandler.getPoll)
 

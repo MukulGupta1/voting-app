@@ -104,12 +104,14 @@ img {
 	display: block;
 }
 
+.voting-icon {
+  font-size: 100px;
+  text-align: center;
+}
+
 .clementine-text { /* Styling for the Clementine.js text */
-	padding: 0;
-	margin: -25px 10 0 30;
-	font-weight: 100;
-	font-size: 48px;
-	color: #FFA000;
+  margin-top: -40px;
+  font-size: 50px;
 }
 
 /****** Click Styling ******/
@@ -179,6 +181,7 @@ img {
 .profile-value {
 	font-weight: 400;
 }
+
 
 span {
 	font-weight: 500;

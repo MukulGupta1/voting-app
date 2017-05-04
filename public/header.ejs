@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <span class="glyphicon glyphicon-check"></span>
+                Voting App
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <% if(loggedIn){ %>
+              <li><a href="/addPoll">Create a Poll</a></li>
+              <li><a href="/viewPolls">Your Polls</a></li>
+            <% } %>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if(loggedIn){ %>
+              <li><a href="/profile">Profile</a></li>
+             <li><a href="/logout">Logout</a></li>
+            <% } %>
+          </ul>
+        </div>
+    </div>
+</nav>
